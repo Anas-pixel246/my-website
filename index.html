@@ -186,3 +186,120 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Midnight Trailers | Full Movies</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --bg:#06060a;
+  --card:#0c0c12;
+  --accent:#22c55e;
+  --text:#e5e7eb;
+  --muted:#9ca3af;
+  --glow:0 0 20px rgba(34,197,94,.35);
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui, sans-serif;}
+body{background:radial-gradient(1200px 600px at 50% -10%, #111827, var(--bg));color:var(--text);}
+header{position:sticky;top:0;background:linear-gradient(180deg, rgba(6,6,10,.9), rgba(6,6,10,.6));backdrop-filter: blur(6px);border-bottom:1px solid #111;padding:12px;}
+header h1{font-weight:900;color:var(--accent);text-shadow: var(--glow);}
+.wrap{max-width:1100px;margin:auto;padding:16px;}
+.grid{display:grid;gap:16px;padding:16px;grid-template-columns: repeat(auto-fill, minmax(200px,1fr));}
+.card{background:var(--card);border:1px solid #111;border-radius:14px;overflow:hidden;opacity:0;transform:translateY(10px);animation:cardIn .6s ease forwards;}
+.card:nth-child(odd){animation-delay:.05s;}
+.card:nth-child(even){animation-delay:.1s;}
+.poster{position:relative;overflow:hidden;height:280px;background:#111;}
+.poster img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
+.play{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(180deg, transparent, rgba(0,0,0,.6));opacity:0;transition:.3s;}
+.play span{background:var(--accent);color:#041;border-radius:50%;width:56px;height:56px;display:grid;place-items:center;box-shadow: var(--glow);font-size:22px;transform:scale(.8);transition:.3s;}
+.card:hover .poster img{transform:scale(1.06);}
+.card:hover .play{opacity:1;}
+.card:hover .play span{transform:scale(1);}
+.info{padding:10px 12px;}
+.info h3{font-size:16px;margin-bottom:6px;}
+.info p{font-size:13px;color:var(--muted);}
+footer{padding:24px;text-align:center;color:#6b7280;}
+
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;place-items:center;z-index:10;}
+.box{width:min(92vw,900px);background:#000;border-radius:14px;overflow:hidden;border:1px solid #111;animation:zoom .25s ease;}
+.box iframe{width:100%;height:50vw;max-height:480px;}
+.close{position:absolute;top:10px;right:10px;background:#111;color:#fff;border:0;border-radius:8px;padding:8px 10px;cursor:pointer;}
+
+@keyframes cardIn{to{opacity:1;transform:none;}}
+@keyframes zoom{from{transform:scale(.9);}to{transform:scale(1);}}
+</style>
+</head>
+
+<body>
+
+<header class="wrap">
+  <h1>Midnight Trailers | Full Movies</h1>
+</header>
+
+<section class="grid" id="grid">
+
+  <!-- MOVIE 1 -->
+  <div class="card" data-title="My First Movie">
+    <div class="poster">
+      <img src="https://images.unsplash.com/photo-1606788075761-6f678f3f5b55?q=80&w=800" alt="">
+      <div class="play" onclick="openTrailer('dQw4w9WgXcQ')"><span>▶</span></div>
+    </div>
+    <div class="info">
+      <h3>My First Movie</h3>
+      <p>Action • 2026</p>
+      <a class="btn" onclick="openTrailer('dQw4w9WgXcQ')">Watch Full Movie</a>
+    </div>
+  </div>
+
+  <!-- MOVIE 2 -->
+  <div class="card" data-title="My Second Movie">
+    <div class="poster">
+      <img src="https://images.unsplash.com/photo-1542206395-9feb3edaa68f?q=80&w=800" alt="">
+      <div class="play" onclick="openTrailer('9bZkp7q19f0')"><span>▶</span></div>
+    </div>
+    <div class="info">
+      <h3>My Second Movie</h3>
+      <p>Drama • 2025</p>
+      <a class="btn" onclick="openTrailer('9bZkp7q19f0')">Watch Full Movie</a>
+    </div>
+  </div>
+
+</section>
+
+<footer>
+  © 2026 | Midnight Trailers
+</footer>
+
+<!-- Modal -->
+<div class="modal" id="modal" onclick="closeTrailer()">
+  <div class="box" onclick="event.stopPropagation()">
+    <button class="close" onclick="closeTrailer()">✕</button>
+    <iframe id="player" src="" frameborder="0" allowfullscreen></iframe>
+  </div>
+</div>
+
+<script>
+function openTrailer(id){
+  const m=document.getElementById('modal');
+  const p=document.getElementById('player');
+  p.src='https://www.youtube.com/embed/'+id+'?autoplay=1';
+  m.style.display='grid';
+}
+function closeTrailer(){
+  const m=document.getElementById('modal');
+  const p=document.getElementById('player');
+  p.src=''; m.style.display='none';
+}
+function filterCards(q){
+  q=q.toLowerCase();
+  document.querySelectorAll('.card').forEach(c=>{
+    c.style.display=c.dataset.title.toLowerCase().includes(q)?'':'none';
+  });
+}
+</script>
+
+</body>
+</html>
