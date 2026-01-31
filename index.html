@@ -1,142 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Anas | Bio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Anas Movies | Trailers</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Arial', sans-serif;
+    :root{
+      --bg:#06060a;
+      --card:#0c0c12;
+      --accent:#22c55e;
+      --text:#e5e7eb;
+      --muted:#9ca3af;
+      --glow: 0 0 20px rgba(34,197,94,.35);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; background:radial-gradient(1200px 600px at 50% -10%, #111827, var(--bg));
+      color:var(--text); font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    }
+    header{
+      position:sticky; top:0; z-index:5;
+      background:linear-gradient(180deg, rgba(6,6,10,.9), rgba(6,6,10,.6));
+      backdrop-filter: blur(6px);
+      border-bottom:1px solid #111;
+    }
+    .wrap{max-width:1100px; margin:auto; padding:16px}
+    .top{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .brand{
+      font-weight:900; letter-spacing:.5px;
+    }
+    .brand span{color:var(--accent); text-shadow: var(--glow)}
+    .search{
+      flex:1; max-width:420px;
+      background:#0b0b10; border:1px solid #111; border-radius:10px;
+      padding:10px 12px; color:var(--text);
+    }
+    .hero{
+      padding:26px 16px 8px;
+      animation: fadeUp .8s ease both;
+    }
+    .hero h1{margin:8px 0}
+    .hero p{color:var(--muted)}
+    .grid{
+      display:grid; gap:16px; padding:16px;
+      grid-template-columns: repeat(auto-fill, minmax(160px,1fr));
+    }
+    .card{
+      background:linear-gradient(180deg, #0e0e15, var(--card));
+      border:1px solid #111; border-radius:14px; overflow:hidden;
+      transform: translateY(10px); opacity:0;
+      animation: cardIn .6s ease forwards;
+    }
+    .card:nth-child(odd){animation-delay:.05s}
+    .card:nth-child(even){animation-delay:.1s}
+    .poster{
+      aspect-ratio:2/3; background:#111; position:relative; overflow:hidden;
+    }
+    .poster img{
+      width:100%; height:100%; object-fit:cover; display:block;
+      transition: transform .4s ease;
+    }
+    .play{
+      position:absolute; inset:0; display:grid; place-items:center;
+      background:linear-gradient(180deg, transparent, rgba(0,0,0,.6));
+      opacity:0; transition:.3s;
+    }
+    .play span{
+      background:rgba(34,197,94,.9); color:#041; border-radius:50%;
+      width:56px; height:56px; display:grid; place-items:center;
+      box-shadow: var(--glow); font-size:22px;
+      transform: scale(.8);
+      transition:.3s;
+    }
+    .card:hover .poster img{transform:scale(1.06)}
+    .card:hover .play{opacity:1}
+    .card:hover .play span{transform:scale(1)}
+    .info{padding:10px 12px}
+    .info h3{font-size:14px; margin:0 0 6px}
+    .info p{font-size:12px; color:var(--muted); margin:0}
+    .btn{
+      display:block; margin-top:10px; text-align:center;
+      padding:10px; border-radius:10px; text-decoration:none;
+      background:#0b0b10; border:1px solid #111; color:var(--text);
+      transition:.25s;
+    }
+    .btn:hover{background:#0f172a; box-shadow: var(--glow)}
+    footer{padding:24px; text-align:center; color:#6b7280}
+
+    /* Modal */
+    .modal{
+      position:fixed; inset:0; background:rgba(0,0,0,.7);
+      display:none; place-items:center; z-index:10;
+    }
+    .box{
+      width:min(92vw, 900px); background:#000; border-radius:14px; overflow:hidden;
+      border:1px solid #111; animation: zoom .25s ease;
+    }
+    .box iframe{width:100%; height:50vw; max-height:480px}
+    .close{
+      position:absolute; top:10px; right:10px; background:#111; color:#fff;
+      border:0; border-radius:8px; padding:8px 10px; cursor:pointer;
     }
 
-    body {
-      min-height: 100vh;
-      background: linear-gradient(135deg, #020617, #0f172a);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-    }
-
-    .card {
-      width: 90%;
-      max-width: 380px;
-      background: rgba(2,6,23,0.85);
-      border-radius: 18px;
-      padding: 30px 20px;
-      text-align: center;
-      box-shadow: 0 0 30px rgba(0,0,0,0.6);
-      animation: fadeUp 1s ease;
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .avatar {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      margin: 0 auto 15px;
-      background: linear-gradient(135deg,#38bdf8,#6366f1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 40px;
-      font-weight: bold;
-    }
-
-    h1 {
-      font-size: 22px;
-      margin-bottom: 6px;
-    }
-
-    p {
-      font-size: 14px;
-      opacity: 0.8;
-      margin-bottom: 25px;
-    }
-
-    .btn {
-      display: block;
-      text-decoration: none;
-      margin: 12px 0;
-      padding: 14px;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: bold;
-      color: white;
-      transition: 0.3s;
-    }
-
-    .instagram {
-      background: linear-gradient(45deg,#f58529,#dd2a7b,#8134af);
-    }
-
-    .whatsapp {
-      background: linear-gradient(45deg,#25D366,#128C7E);
-    }
-
-    .youtube {
-      background: linear-gradient(45deg,#ff0000,#cc0000);
-    }
-
-    .btn:hover {
-      transform: scale(1.05);
-      opacity: 0.9;
-    }
-
-    footer {
-      margin-top: 20px;
-      font-size: 12px;
-      opacity: 0.5;
-    }
+    @keyframes fadeUp{from{opacity:0; transform:translateY(16px)} to{opacity:1; transform:none}}
+    @keyframes cardIn{to{opacity:1; transform:none}}
+    @keyframes zoom{from{transform:scale(.9)}}
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <div class="avatar">A</div>
-    <h1>Anas</h1>
-    <p>Welcome to my bio link 👋</p>
-
-    <a class="btn instagram" href="https://instagram.com/" target="_blank">
-      📸 Instagram
-    </a>
-
-    <a class="btn whatsapp" href="https://wa.me/91XXXXXXXXXX" target="_blank">
-      💬 WhatsApp
-    </a>
-
-    <a class="btn youtube" href="https://youtube.com/" target="_blank">
-      ▶️ YouTube
-    </a>
-
-    <footer>
-      © 2026 | Anas
-    </footer>
+<header>
+  <div class="wrap top">
+    <div class="brand">ANAS <span>MOVIES</span></div>
+    <input class="search" placeholder="Search trailers…" oninput="filterCards(this.value)" />
   </div>
+</header>
+
+<section class="hero wrap">
+  <h1>Latest Movie Trailers</h1>
+  <p>Dark • Fast • Free trailers (legal YouTube embeds)</p>
+</section>
+
+<section class="grid" id="grid">
+  <!-- CARD 1 -->
+  <div class="card" data-title="Example Movie One">
+    <div class="poster">
+      <img src="https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?q=80&w=800" alt="">
+      <div class="play" onclick="openTrailer('dQw4w9WgXcQ')"><span>▶</span></div>
+    </div>
+    <div class="info">
+      <h3>Example Movie One</h3>
+      <p>Action • 2025</p>
+      <a class="btn" onclick="openTrailer('dQw4w9WgXcQ')">Watch Trailer</a>
+    </div>
+  </div>
+
+  <!-- CARD 2 -->
+  <div class="card" data-title="Example Movie Two">
+    <div class="poster">
+      <img src="https://images.unsplash.com/photo-1502139214982-d0ad755818d8?q=80&w=800" alt="">
+      <div class="play" onclick="openTrailer('9bZkp7q19f0')"><span>▶</span></div>
+    </div>
+    <div class="info">
+      <h3>Example Movie Two</h3>
+      <p>Drama • 2024</p>
+      <a class="btn" onclick="openTrailer('9bZkp7q19f0')">Watch Trailer</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 | Anas Movies • Trailers only
+</footer>
+
+<!-- Modal -->
+<div class="modal" id="modal" onclick="closeTrailer()">
+  <div class="box" onclick="event.stopPropagation()">
+    <button class="close" onclick="closeTrailer()">✕</button>
+    <iframe id="player" src="" frameborder="0" allowfullscreen></iframe>
+  </div>
+</div>
+
+<script>
+  function openTrailer(id){
+    const m = document.getElementById('modal');
+    const p = document.getElementById('player');
+    p.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1';
+    m.style.display='grid';
+  }
+  function closeTrailer(){
+    const m = document.getElementById('modal');
+    const p = document.getElementById('player');
+    p.src=''; m.style.display='none';
+  }
+  function filterCards(q){
+    q = q.toLowerCase();
+    document.querySelectorAll('.card').forEach(c=>{
+      c.style.display = c.dataset.title.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
 
 </body>
 </html>
-<div style="margin-top:25px;">
-  <h3>🎬 Free Movie</h3>
-
-  <iframe 
-    width="100%" 
-    height="215"
-    src="https://www.youtube.com/embed/VIDEO_ID"
-    frameborder="0"
-    allowfullscreen>
-  </iframe>
